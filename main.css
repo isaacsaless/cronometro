@@ -1,0 +1,96 @@
+html, body{
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #131314;
+    color: #c8cbd0;
+    font-family: "Open Sans", sans-serif;
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.elements{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.timer-section{
+    display: flex;
+    align-items: end;
+}
+
+.timer-section > h3{
+    font-size: 70pt;
+    margin: 0px;
+    padding: 0;
+    height: fit-content;
+}
+
+.timer-section > h4{
+    margin: 0px 0px 20px;
+}
+
+.btn{
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18pt;
+    text-align: center;
+    cursor: pointer;
+}
+
+.start-btn{
+    background-color: rgb(58, 130, 255);
+    width: 100%;
+}
+
+.pause-btn{
+    background-color: rgb(255, 66, 66);
+    width: 100%;
+}
+
+.unpause-btn{
+    background-color: #4af176;
+    width: 50%;
+    margin-right: 5%;
+    font-size: 15pt;
+}
+
+.reset-btn{
+    background-color: rgb(247, 244, 82);
+    width: 50%;
+    font-size: 15pt;
+}
+
+.buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+@media only screen and (max-width:600px){
+    .timer-section > h3{
+        font-size: 50pt;
+    }
+
+    .btn{
+        font-size: 15pt;
+    }
+
+    .unpause-btn{
+        font-size: 13pt;
+    }
+
+    .reset-btn{
+        font-size: 13pt;
+    }
+}
