@@ -1,13 +1,12 @@
 let htmlTimer = document.getElementById("timer");
 let htmlMilisecond = document.getElementById("timer-milisecond");
 let start = document.getElementById("start");
-let pause;
-let unpause;
-let reset;
+let pause, unpause, reset;
 let buttons = document.getElementById("buttons");
 let milisecond, milisecondVal, second, secondVal, minute, minuteVal, hour, hourVal;
 milisecond = milisecondVal = second = secondVal = minute = minuteVal = hour = hourVal = 0;
 let jsTimer;
+let endMessage = document.getElementById("endMessage");
 
 function updateTimer() {
     milisecondVal = milisecond < 10 ? '0' + milisecond : milisecond;
@@ -15,7 +14,7 @@ function updateTimer() {
     minuteVal = minute < 10 ? '0' + minute : minute;
     hourVal = hour < 10 ? '0' + hour : hour;
 
-    htmlTimer.innerHTML = `${hourVal}:${minuteVal}:${secondVal}`
+    htmlTimer.innerHTML = `${hourVal}:${minuteVal}:${secondVal}`;
     htmlMilisecond.innerHTML = `${milisecondVal}`;
 }
 
@@ -25,6 +24,21 @@ function btnPause() {
     pause.setAttribute("class", "pause-btn btn");
     pause.setAttribute("id", "pause");
     buttons.appendChild(pause);
+}
+
+function endTimer(){
+    pause.remove();
+
+    start = document.createElement('button');
+    start.innerHTML = '<i class="fa-solid fa-play"></i> Iniciar';
+    start.setAttribute("class", "start-btn btn");
+    start.setAttribute("id", "start");
+    buttons.appendChild(start);
+
+    clearInterval(jsTimer);
+    milisecond = milisecondVal = second = secondVal = minute = minuteVal = hour = hourVal = 0;
+    updateTimer();
+    endMessage.style.display = "block";
 }
 
 function sumTimer() {
@@ -42,23 +56,24 @@ function sumTimer() {
         minute = 0;
     }
     if (hour == 100) {
-
+        endTimer();
     }
     updateTimer();
 }
 
 document.getElementById("buttons").addEventListener("click", function(event) {
-    if (event.target && event.target.id === "start") {
+    if (event.target && (event.target.id === "start" || event.target.parentElement.id === "start")) {
         jsTimer = setInterval(sumTimer, 10);
         start.remove();
         btnPause();
+        endMessage.style.display = "none";
     }
 });
 
 document.getElementById("buttons").addEventListener("click", function(event) {
-    if (event.target && event.target.id === "pause") {
+    if (event.target && (event.target.id === "pause" || (event.target.parentElement && event.target.parentElement.id === "pause"))) {
         clearInterval(jsTimer);
-        event.target.remove();
+        pause.remove();
 
         unpause = document.createElement('button');
         unpause.innerHTML = '<i class="fa-solid fa-play"></i> Despausar';
@@ -75,8 +90,8 @@ document.getElementById("buttons").addEventListener("click", function(event) {
 });
 
 document.getElementById("buttons").addEventListener("click", function(event) {
-    if (event.target && event.target.id === "unpause") {
-        event.target.remove();
+    if (event.target && (event.target.id === "unpause" || (event.target.parentElement && event.target.parentElement.id === "unpause"))) {
+        unpause.remove();
         reset.remove();
         jsTimer = setInterval(sumTimer, 10);
         btnPause();
@@ -84,8 +99,8 @@ document.getElementById("buttons").addEventListener("click", function(event) {
 });
 
 document.getElementById("buttons").addEventListener("click", function(event) {
-    if (event.target && event.target.id === "reset") {
-        event.target.remove();
+    if (event.target && (event.target.id === "reset" || (event.target.parentElement && event.target.parentElement.id === "reset"))) {
+        reset.remove();
         unpause.remove();
 
         start = document.createElement('button');
@@ -95,6 +110,6 @@ document.getElementById("buttons").addEventListener("click", function(event) {
         buttons.appendChild(start);
 
         milisecond = milisecondVal = second = secondVal = minute = minuteVal = hour = hourVal = 0;
-        updateTimer()
+        updateTimer();
     }
 });
